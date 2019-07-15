@@ -1,31 +1,32 @@
 package com.thoughtworks.tdd;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class SmartParkingBoyTest {
-    @Test
-    public void should_park_car_in_more_empty_positions_lot() throws Exception {
-        List<ParkingLot> lots=new ArrayList<>();
-        ParkingLot parkingLot1=new ParkingLot();
-        ParkingLot parkingLot2=new ParkingLot();
+    private SmartPakingBoy smartPakingBoy;
+    private List<ParkingLot> lots;
+    private ParkingLot parkingLot1;
+    private ParkingLot parkingLot2;
+    @BeforeEach
+    private void init() {
+        lots = new ArrayList<>();
+        parkingLot1 = new ParkingLot();
+        parkingLot2 = new ParkingLot();
         lots.add(parkingLot1);
         lots.add(parkingLot2);
-        SmartPakingBoy SmartParkingBoy=new SmartPakingBoy(lots);
-
+        smartPakingBoy = new SmartPakingBoy(lots);
+    }
+    @Test
+    public void should_park_car_in_more_empty_positions_lot() throws Exception {
         Car firstCar=new Car();
-        Ticket ticketFirst=SmartParkingBoy.parking(firstCar);
-
+        Ticket ticketFirst=smartPakingBoy.parking(firstCar);
         Car SecondeCar=new Car();
-        Ticket ticketLast=SmartParkingBoy.parking(SecondeCar);
-
-        Assertions.assertTrue(parkingLot1.getParkingMap().get(ticketLast)==null);
+        Ticket ticketLast=smartPakingBoy.parking(SecondeCar);
+        Assertions.assertNull(parkingLot1.getParkingMap().get(ticketLast));
     }
 }
