@@ -21,6 +21,7 @@ public class ParkingTest {
         Car car=new Car();
         Ticket ticket=parkingBoy.parking(car);
         Car fetchCar=parkingBoy.fetchCar(ticket);
+
         assertThat(car, is(fetchCar));
     }
 
@@ -32,7 +33,9 @@ public class ParkingTest {
         Ticket ticket2=parkingBoy.parking(car2);
         Car fetchCar1=parkingBoy.fetchCar(ticket1);
         Car fetchCar2=parkingBoy.fetchCar(ticket2);
+
         assertThat(car1, is(fetchCar1));
+
         assertThat(car2, is(fetchCar2));
     }
     @Test
@@ -44,11 +47,13 @@ public class ParkingTest {
         Throwable exception1 = assertThrows(ParkingException.class,()->{
             Car fetchCar1=parkingBoy.fetchCar(null);
         });
-        assertEquals("Please provide your parking ticket.",exception1.getMessage());
         // not give a wrong ticket
         Throwable exception2 = assertThrows(ParkingException.class,()->{
             Car fetchCar2=parkingBoy.fetchCar(new Ticket());
         });
+
+        assertEquals("Please provide your parking ticket.",exception1.getMessage());
+
         assertEquals("Unrecognized parking ticket.",exception2.getMessage());
     }
     @Test
@@ -59,6 +64,7 @@ public class ParkingTest {
             Car fetchCar1=parkingBoy.fetchCar(ticket1);
             Car fetchCar2=parkingBoy.fetchCar(ticket1);
         });
+
         assertEquals("Unrecognized parking ticket.",exception2.getMessage());
     }
     @Test
@@ -71,6 +77,7 @@ public class ParkingTest {
             Car car_11=new Car();
             Ticket ticket11=parkingBoy.parking(car_11);
         });
+
         Assertions.assertEquals("Not enough position.", exception2.getMessage());
     }
     @Test
@@ -78,6 +85,7 @@ public class ParkingTest {
         Car car1=new Car();
         Ticket ticket1=parkingBoy.parking(car1);
         Ticket ticket2=parkingBoy.parking(car1);
-        Assertions.assertEquals(null, ticket2);
+
+        Assertions.assertNull(ticket2);
     }
 }
