@@ -27,6 +27,7 @@ public class SmartParkingBoyTest {
         Ticket ticketFirst=smartPakingBoy.parking(firstCar);
         Car SecondeCar=new Car();
         Ticket ticketLast=smartPakingBoy.parking(SecondeCar);
+
         Assertions.assertNull(parkingLot1.getParkingMap().get(ticketLast));
     }
 }
