@@ -1,20 +1,23 @@
 package com.thoughtworks.tdd;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParkingTest {
+    private  ParkingLot parkingLot;
+    private  ParkingBoy parkingBoy;
+    @BeforeEach
+    private  void  initParkiongLotAndParkingBoy(){
+         parkingLot=new ParkingLot();
+         parkingBoy=new ParkingBoy(parkingLot);
+    }
     @Test
     public void parking_the_car_and_should_fetch_the_car_when_give_a_ticket() throws Exception {
-        ParkingLot parkingLot=new ParkingLot();
-        ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
         Car car=new Car();
         Ticket ticket=parkingBoy.parking(car);
         Car fetchCar=parkingBoy.fetchCar(ticket);
@@ -23,8 +26,6 @@ public class ParkingTest {
 
     @Test
     public void parking_mutiple_cars_and_should_fetch_the_car_correct_when_give_a_ticket() throws Exception {
-        ParkingLot parkingLot=new ParkingLot();
-        ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
         Car car1=new Car();
         Car car2=new Car();
         Ticket ticket1=parkingBoy.parking(car1);
@@ -34,11 +35,8 @@ public class ParkingTest {
         assertThat(car1, is(fetchCar1));
         assertThat(car2, is(fetchCar2));
     }
-
     @Test
     public void parking_cars_and_should_not_fetch_the_car_when_give_a_worng_ticket() throws Exception {
-        ParkingLot parkingLot=new ParkingLot();
-        ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
         Car car1=new Car();
         Car car2=new Car();
         Ticket ticket1=parkingBoy.parking(car1);
@@ -53,13 +51,9 @@ public class ParkingTest {
         });
         assertEquals("Unrecognized parking ticket.",exception2.getMessage());
     }
-
     @Test
     public void should_not_fetch_the_car_when_give_a_ticket_had_been_used() throws Exception {
-
         Throwable exception2 = assertThrows(ParkingException.class,()->{
-            ParkingLot parkingLot=new ParkingLot();
-            ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
             Car car1=new Car();
             Ticket ticket1=parkingBoy.parking(car1);
             Car fetchCar1=parkingBoy.fetchCar(ticket1);
@@ -67,12 +61,9 @@ public class ParkingTest {
         });
         assertEquals("Unrecognized parking ticket.",exception2.getMessage());
     }
-
     @Test
     public void should_not_parking_the_car_when_parkingLot_is_fulled() throws ParkingException {
         Throwable exception2 = assertThrows(ParkingException.class,()->{
-            ParkingLot parkingLot=new ParkingLot();
-            ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
             for(int i=0;i<20;i++){
                 Car car=new Car();
                 Ticket ticket1=parkingBoy.parking(car);
@@ -84,8 +75,6 @@ public class ParkingTest {
     }
     @Test
     public void should_not_parking_the_car_when_parking_a_parked_car() throws ParkingException {
-        ParkingLot parkingLot=new ParkingLot();
-        ParkingBoy parkingBoy=new ParkingBoy(parkingLot);
         Car car1=new Car();
         Ticket ticket1=parkingBoy.parking(car1);
         Ticket ticket2=parkingBoy.parking(car1);
