@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot  {
+    private static final int capacity=10;
+    public static int getCapacity() {
+        return capacity;
+    }
     private Map<Ticket,Car> parkingMap;
 
     public Map<Ticket, Car> getParkingMap() {
@@ -23,7 +27,7 @@ public class ParkingLot  {
     }
 
     public boolean isFull(){
-        return parkingMap.size()>=10;
+        return parkingMap.size()>=getCapacity();
     }
 
     public boolean hasBeenPark(Car car) {
